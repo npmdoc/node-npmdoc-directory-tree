@@ -61,12 +61,71 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.directory-tree">module directory-tree</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.directory-tree.directory-tree">
+            function <span class="apidocSignatureSpan"></span>directory-tree
+            <span class="apidocSignatureSpan">(path, extensions, onEachFile)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.directory-tree" id="apidoc.module.directory-tree">module directory-tree</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.directory-tree.directory-tree" id="apidoc.element.directory-tree.directory-tree">
+        function <span class="apidocSignatureSpan"></span>directory-tree
+        <span class="apidocSignatureSpan">(path, extensions, onEachFile)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function directoryTree(path, extensions, onEachFile) {
+	const name = PATH.basename(path);
+	const item = { path, name };
+	let stats;
+
+	try { stats = FS.statSync(path); }
+	catch (e) { return null; }
+
+	if (stats.isFile()) {
+		const ext = PATH.extname(path).toLowerCase();
+
+		// Only add files with the provided extensions
+		if (extensions &#x26;&#x26; extensions.length &#x26;&#x26; extensions.indexOf(ext) === -1)
+			return null;
+			
+		item.size = stats.size;  // File size in bytes
+		item.extension = ext;
+
+		if (onEachFile) {
+			onEachFile(item, PATH);
+		}
+	}
+	else if (stats.isDirectory()) {
+		try {
+			item.children = FS.readdirSync(path)
+				.map(child =&#x3e; directoryTree(PATH.join(path, child), extensions, onEachFile))
+				.filter(e =&#x3e; !!e);
+			item.size = item.children.reduce((prev, cur) =&#x3e; prev + cur.size, 0);
+		} catch(ex) {
+			if (ex.code == &#x22;EACCES&#x22;)
+				//User does not have permissions, ignore directory
+				return null;
+		}
+	} else {
+		return null; // Or set item.size = 0 for devices, FIFO and sockets ?
+	}
+	return item;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 
