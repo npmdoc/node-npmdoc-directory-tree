@@ -1,6 +1,6 @@
 # npmdoc-directory-tree
 
-#### api documentation for  [directory-tree (v1.2.1)](https://github.com/mihneadb/node-directory-tree)  [![npm package](https://img.shields.io/npm/v/npmdoc-directory-tree.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-directory-tree) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-directory-tree.svg)](https://travis-ci.org/npmdoc/node-npmdoc-directory-tree)
+#### basic api documentation for  [directory-tree (v1.2.1)](https://github.com/mihneadb/node-directory-tree)  [![npm package](https://img.shields.io/npm/v/npmdoc-directory-tree.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-directory-tree) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-directory-tree.svg)](https://travis-ci.org/npmdoc/node-npmdoc-directory-tree)
 
 #### Convert a directory tree to a JS object.
 
@@ -63,7 +63,8 @@
     "scripts": {
         "test": "mocha"
     },
-    "version": "1.2.1"
+    "version": "1.2.1",
+    "bin": {}
 }
 ```
 
